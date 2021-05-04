@@ -6,8 +6,9 @@
 </head>
 <body>
     <p1>Hello!!!</p1>
-
-        {{ name }}
+    {% for i in name %}
+        {{ i[1] }}-{{ i[2] }}
+    {% endfor %}
 
     {% block content %}
 

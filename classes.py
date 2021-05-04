@@ -91,29 +91,68 @@ class Aa:
     def __getitem__(self, ii):
         return self.data[ii]
 
-class Setrcontr(Rerepr):
+# class Setrcontr(Rerepr):
+#
+#     def __getattr__(self, item):
+#         if item == 'aaa':
+#             return 40
+#         else:
+#             raise AttributeError(item)
+#
+#     def __setattr__(self, name, volu):
+#         if name == 'age':
+#             self.__dict__['age'] = volu+10
+#
+#         else:
+#             raise AttributeError(name)
 
-    def __getattr__(self, item):
-        if item == 'aaa':
-            return 40
-        else:
-            raise AttributeError(item)
+class Comp1:
+    def __init__(self, vol):
+        self.vol = vol
+    def __add__(self, other): #складывает self слева x=comp1(10), x+1
+        print('add', 'obj', other, 'zn', self.vol)
+        return other+self.vol
+    def __radd__(self, other): #cкладывает self cправа 1+x
+        print('radd', other, self.vol)
+        return other+self.vol
 
-    def __setattr__(self, name, volu):
-        if name == 'age':
-            self.__dict__['age'] = volu+10
+class Comp2:
+    def __init__(self, vol):
+        self.vol = vol
+    def __call__(self): #вызывается при вызове экземпляра, сохраняетс состояние в данном случае
+        print(
+            'call', self.vol
+        )
 
-        else:
-            raise AttributeError(name)
+
+
+
+class cm:
+    data='spam'
+    def __gt__(self, other):
+        print(other)
+        return self.data > other
+
+    def __lt__(self, other):
+        return self.data < other
 
 
 
 if __name__=='__main__':
+    comp = cm()
 
-    x = Setrcontr()
-    x.aaa
-    x.age = 40
-    print(x)
+    print(comp > 'asd')
+    print(comp < 'asd')
+
+
+
+
+
+
+    # x = Setrcontr()
+    # x.aaa
+    # x.age = 40
+    # print(x)
     # I = Aa()
     # I.data = 'sasun'
     # for u in I:

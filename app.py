@@ -10,13 +10,16 @@ app.config.from_object(configg)
 @app.route('/')
 def hello_world():
     db = connect.get_db()
-    return render_template('index.html', name=db)
+    dats = connect.readdatabaseall(db)
+    print(dats)
+    return render_template('index.html', name=dats.getdata())
 
 @app.teardown_appcontext
+# закрывает базу данных по окончании запроса
 def close_db(error):
     if hasattr(g, 'link_db'):
         g.link_db.close()
-        print('выкл')
+
 
 # int, float, path
 @app.route("/profile/<cifra>")
@@ -41,6 +44,21 @@ def forma():
         flash('Повторите ввод')
     connect.create_db()
     return render_template('form.html', title='AAAAAAAAA')
+
+@app.route('/addata', methods=['POST', 'GET'])
+def adddata():
+    db = connect.get_db()
+    dats = connect.readdatabaseall(db)
+
+    if request.method == 'POST':
+        if request.form['username'] != 0:
+            res = dats.adddata(request.form['username'], request.form['mail'])
+            if res == True:
+                print('ок')
+
+            else:
+                print('хреново')
+    return render_template('index.html', name=dats.getdata())
 
 
 
