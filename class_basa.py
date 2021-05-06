@@ -20,6 +20,8 @@ class Papers(Rerepr, Parss):
                    deposit,
                    number=None,
                    exemplar=None,
+                   out_local_number=None,
+                    out_lokal_data=None,
                    ):
         """ name - наименование объекта
         whence - откуда поступил,
@@ -30,6 +32,8 @@ class Papers(Rerepr, Parss):
         deposit - где хранится,
         number - номер самого объекта, если есть
         exemplar - экземпляр если у номера объекта их несколько
+        out_local_number - исходящий номер
+        out_local_data - исходящая дата
         """
         self.name = 'papers'
         self.whence = whence
@@ -40,10 +44,19 @@ class Papers(Rerepr, Parss):
         self.deposit = deposit
         self.number = number
         self.exemplar = exemplar
-        # self.parsing()
-        Parss.__init__(self, number)
+        self.out_local_number = None,
+        self.out_lokal_data = None,
 
-    #
+        # self.parsing()
+        Parss.__init__(self, number, exemplar)
+
+    def view(self, outNloc, outDloc, number, exem, deposit):
+        # номер документа number 0001...
+        self.out_local_number = outNloc
+        self.out_lokal_data = outDloc
+        self.pars_number[number][0] = deposit
+        self.pars_number[number][2] = exem
+
     # def parsing(self):
     #     # print(self.__class__.__name__)
     #     if self.__class__.__name__ == "Technics" or "Technics_papers":
@@ -63,13 +76,13 @@ class Technics_papers(Papers):
         self.name = 'technics_papers'
 
 
-
-
 if __name__=='__main__':
 
-    d = Papers('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'minsk', '00001-00005', '014')
-    dd = Technics('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'minsk', '00001-00005', '014')
-    ddd = Technics_papers('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'brest', '00001-00005', '014')
+    d = Papers('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'minsk', '00001-00003')
+    # dd = Technics('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'minsk', '00001-00005', '014')
+    # ddd = Technics_papers('moskvva', 1111, '1.1.1111', 2222, '1.1.1111', 'brest', '00001-00005', '014')
     print(d)
-    print(dd)
-    print(ddd)
+    # d.view('1234', '1.22.1212', '00003', '002', 'brest')
+
+    # print(dd)
+    # print(ddd)

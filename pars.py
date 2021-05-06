@@ -1,4 +1,3 @@
-
 class Parss:
     """разбиваем строку вида '00001-00011, 00013, 00017-00020'
     в список вида ['00001', '00002', '00003', '00004', '00005', '00006', '00007', '00008',
@@ -6,18 +5,24 @@ class Parss:
 """
     def __init__(self, text = None, exem = None):
         # номера как выше в описании
-        self.deposit = 'minsk'  # убрать потом использовать для тестирования
+        # self.deposit = 'minsk'  # убрать, использовать для тестирования
 
+        dic = {}
         if text:
             self.pars_number = self.parsing_text(text, True)
-            print(self.pars_number)
+        else:
+            self.pars_number = text
         if exem:
             self.pars_exem = self.parsing_text(exem, False)
-            print(self.pars_exem)
+        else:
+            self.pars_exem = exem
+
         if self.pars_number and self.pars_exem:
+            # разделяем номера и экземпляры
             for key in self.pars_number:
-                self.pars_number [key].append(self.pars_exem)
-            print(self.pars_number)
+                for ex in self.pars_exem:
+                    dic[ex] = self.pars_number
+            self.pars_number = dic
 
     def parsing_text(self, text, yesno):
         pars_number = dict()
@@ -45,7 +50,8 @@ class Parss:
             return pars_ex
 
 
-#проверку на колличество цифр в номерах, проверку на наличие букав в цифрах, проверку на повторения одинаковых цифр реализовать
+# проверку на колличество цифр в номерах валидацию при вводе сделать,
+# проверку на наличие букав в цифрах, проверку на повторения одинаковых цифр реализовать
 
 
 if __name__=='__main__':
